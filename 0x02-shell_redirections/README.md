@@ -1,4 +1,4 @@
-#**Shell, I/O Redirections and filters**
+**Shell, I/O Redirections and filters**
 <table>
 <tr>
 <td>
@@ -15,7 +15,14 @@ Description
 <td>
 Prints "Hello, World", followed by a new line to the standard output
 </td>
-
+</tr>
+<tr>
+<td>
+1-confused smiley
+</td>
+<td>
+Displays a confused smiley "(Ôo)'
+</td>
 </tr>
 </table>
 
