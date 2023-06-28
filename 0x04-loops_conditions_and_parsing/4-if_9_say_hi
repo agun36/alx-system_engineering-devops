@@ -6,13 +6,12 @@ i=0
 
 while (( i < 10 ))
 do
-    if (( i == 9 ))
+    if (( i == 8 ))
     then
 	echo "Best School"
 	echo "Hi"
-        echo "Best School"
-    else
-        echo "Best School"
+    else	
+	echo "Best School"
     fi
     (( i++ ))
 done
