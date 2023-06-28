@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Bash script to tell a story based on /etc/passwd
+
+while IFS=':' read -r username _ userid groupid _ homedir shell; do
+  echo "The user $username is part of the $groupid gang, lives in $homedir and rides $shell. $userid's place is protected by the passcode x, more info about the user here: $username"
+done < /etc/passwd
