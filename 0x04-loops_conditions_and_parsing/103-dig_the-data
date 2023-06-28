@@ -1,5 +1,4 @@
-#!/bin/bash
-#parsed the Apache log file, let’s sort the data so you can get a better idea of what is going on.
+#!/usr/bin/env bash
+#This script parse through the log file and print the ip and http status
 
-awk '{ ip[$1]++; status[$9]++ } END { for (i in ip) print ip[i], i, status[200] }' apache-access.log | sort -nr
-
+awk -F' ' '{ print $1, $9 }' apache-access.log | sort | uniq -c | sort -rn
