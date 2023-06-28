@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#Write a Bash script that displays a list of currently running processes.
+#Must show all processes, for all users, including those which might not have a TTY
+#Display in a user-oriented format
+#Show process hierarchy
+
+printf "%-8s %-8s %-4s %-4s %-8s %-8s %-4s %-8s %-8s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "COMMAND"
+
+while read -r user pid cpu mem vsz rss tty stat start time command
+do
+    printf "%-8s %-8s %-4s %-4s %-8s %-8s %-4s %-8s %-8s\n" "$user" "$pid" "$cpu" "$mem" "$vsz" "$rss" "$tty" "$stat" "$command"
+done < <(ps -ef --no-headers)
+
+exit 0
