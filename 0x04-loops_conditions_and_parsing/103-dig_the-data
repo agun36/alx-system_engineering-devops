@@ -1,0 +1,5 @@
+#!/bin/bash
+#parsed the Apache log file, let’s sort the data so you can get a better idea of what is going on.
+
+awk '{ ip[$1]++; status[$9]++ } END { for (i in ip) print ip[i], i, status[200] }' apache-access.log | sort -nr
+
