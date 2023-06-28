@@ -4,11 +4,4 @@
 #Display in a user-oriented format
 #Show process hierarchy
 
-printf "%-8s %-8s %-4s %-4s %-8s %-8s %-4s %-8s %-8s\n" "USER" "PID" "%CPU" "%MEM" "VSZ" "RSS" "TTY" "STAT" "COMMAND"
-
-while read -r user pid cpu mem vsz rss tty stat start time command
-do
-    printf "%-8s %-8s %-4s %-4s %-8s %-8s %-4s %-8s %-8s\n" "$user" "$pid" "$cpu" "$mem" "$vsz" "$rss" "$tty" "$stat" "$command"
-done < <(ps -ef --no-headers)
-
-exit 0
+ps auxf
