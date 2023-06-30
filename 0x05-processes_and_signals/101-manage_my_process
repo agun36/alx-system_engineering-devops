@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
-# script 101-manage_my_process that manages manage_my_process.
-TEMP_FILE=/var/run/my_process.pid
-if (("$1" == "start"))
+#This script Starts/Stops/Restarts manage_my_process script
+
+file="/var/run/my_process.pid"
+if [ "${1}" == "start" ]
 then
+trap 'echo "manage_my_process started"' 0
     ./manage_my_process &
-    pidof -s bash > "$TEMP_FILE" && echo "manage_my_process started"
-elif (("$1" == stop))
+    echo "$!" > "$file"
+    exit 0
+elif [ "${1}" == "stop" ]
 then
-    kill "$(cat $TEMP_FILE)"
-    rm "$TEMP_FILE" && echo "manage_my_process stopped"
-elif (("$1" == restart))
+trap 'echo "manage_my_process stopped"' 0
+kill "$(cat $file)"
+rm -f "$file"
+exit 0
+elif [ "${1}" == "restart" ]
 then
-    kill "$(cat $TEMP_FILE)"
-    rm "$TEMP_FILE"
+trap 'echo "manage_my_process restarted"' 0
+    kill "$(cat $file)"
+    rm -f "$file"
     ./manage_my_process &
-    pidof -s bash > "$TEMP_FILE" && echo "manage_my_process restarted" 
+    echo "$!" > "$file"
+exit 0
 else
-    echo "Usage: manage_my_process {start|stop|restart}"
+echo "Usage: manage_my_process {start|stop|restart}"
 fi

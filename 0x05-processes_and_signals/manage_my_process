@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#writes I am alive! to the file /tmp/my_process
+
+file="/tmp/my_process"
+i=0
+while (( i < 10 ))
+do
+     echo "I am alive!" >> "$file"
+     sleep 2
+done
