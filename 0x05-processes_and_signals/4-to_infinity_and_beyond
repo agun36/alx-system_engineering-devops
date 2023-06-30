@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#script that displays To infinity and beyond indefinitely.
+
+string="To infinity and beyond"
+
+while true
+do
+    echo "$string"
+    sleep 2
+done
