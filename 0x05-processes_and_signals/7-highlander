@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
-#Bash script that display infinity loop.
+#Scripts that Kills the 4-to_infinity_and_beyond process.
 
-trap 'echo "I am invincible!!!"' 15
-i=0
-while (( i < 10 ))
-do
-sleep 2
-echo "To infinity and beyond"
-done
+pkill -f 4-to_infinity_and_beyond
