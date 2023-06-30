@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 #script that displays To infinity and beyond indefinitely.
 
-string="To infinity and beyond"
-
-while true
+i=0
+while (( i < 10 ))
 do
-    echo "$string"
+    echo "To infinity and beyond"
     sleep 2
 done
