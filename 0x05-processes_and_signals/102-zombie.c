@@ -6,7 +6,7 @@
  * infinite_while - create a sleep loop
  * Return: 0
  */
-int infinite_white(void)
+int infinite_while(void)
 {
 	while (1)
 	{
