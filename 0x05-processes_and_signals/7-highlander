@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
-#Bash script that displays:
-#To infinity and beyond indefinitely
-#With a sleep 2 in between each iteration
-#I am invincible!!! when receiving a SIGTERM signal
+#Bash script that display infinity loop.
 
-trap 'echo "I am invincible!!!"' SIGTERM
-
-string="To infinity and beyond"
-
-while true
+trap 'echo "I am invincible!!!"' 15
+i=0
+while (( i < 10 ))
 do
-    echo "$string"
-    sleep 2
+sleep 2
+echo "To infinity and beyond"
 done
