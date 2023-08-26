@@ -1,7 +1,4 @@
 #!/bin/bash
 # Generate an RSA key pair with the specified parameters
 # Output confirmation
-mkdir -p ~/.ssh
-ssh-keygen -t rsa -b 4096 -f ~/.ssh/school -N "betty"
-echo "RSA key pair 'school' created successfully!"
-ls -l ~/.ssh/school*
+ssh-keygen -f school -b 4096 -N betty
