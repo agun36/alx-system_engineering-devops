@@ -1,9 +1,6 @@
 # SSH client configuration for alx-system_engineering-devops
 # Replace with your actual server's IP or hostname
 # Replace with the appropriate username
-Host magic-server
-    HostName 54.165.175.215
-    User ubuntu
-    IdentityFile ~/.ssh/school
-    PreferredAuthentications publickey
+Host *
     PasswordAuthentication no
+    IdentityFile ~/.ssh/school
