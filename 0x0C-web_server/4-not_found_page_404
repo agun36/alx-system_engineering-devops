@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Script that configures a new Ubuntu machine to respect above requirements
+
+sudo apt-get update
+sudo apt-get install -y nginx
+
+echo "Hello World!" | sudo tee /var/www/html/index.html
+string_for_replacement="server_name _;\\n\\trewrite ^\\/redirect_me https:\\/\\/www.youtube.com\\/watch?v=QH2-TGUlwu4 permanent;"
+sudo sed -i "s#server_name _;#$string_for_replacement#" /etc/nginx/sites-enabled/default
+# Create the custom error page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+# Define the replacement string without line breaks
+string_for_replacement="listen 80 default_server;\\n\\t\\terror_page 404 /404.html;\\n\\t\\tlocation = /404.html {\\n\\t\\t\\troot /var/www/html;\\n\\t\\t\\tinternal;\\n\\t\\t}"
+
+# Use sed to replace the target string in the Nginx configuration
+sudo sed -i "s|listen 80 default_server;|$string_for_replacement|" /etc/nginx/sites-enabled/default
+
+# Test Nginx configuration syntax
+sudo nginx -t
+
+# If the test is successful, reload Nginx
+sudo service nginx reload
+
+sudo service nginx restart
