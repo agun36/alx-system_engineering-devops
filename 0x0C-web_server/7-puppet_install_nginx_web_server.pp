@@ -1,27 +1,25 @@
-# 7-puppet_install_nginx_web_server.pp
+# Script to install nginx using puppet
 
-# Install Nginx web server
-package { 'nginx':
-  ensure => installed,
+package {'nginx':
+  ensure => 'present',
 }
 
-# Configure the Nginx server block
-file { '/etc/nginx/sites-available/default':
-  ensure  => 'file',
-  content => template('nginx_default.conf.erb'),
-  require => Package['nginx'],
-  notify  => Service['nginx'],
+exec {'install':
+  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
+  provider => shell,
+
 }
 
-# Create the custom index.html file
-file { '/var/www/html/index.html':
-  ensure  => 'present',
-  content => 'Hello World!',
-  require => Package['nginx'],
+exec {'Hello':
+  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
+  provider => shell,
 }
 
-# Ensure Nginx service is running
-service { 'nginx':
-  ensure  => running,
-  require => Package['nginx'],
+exec {'sudo sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/https://www.youtube.com/watch?v=QH2-TGUlwu4\/;\\n\\t}/" /etc/nginx/sites-available/default':
+  provider => shell,
+}
+
+exec {'run':
+  command  => 'sudo service nginx restart',
+  provider => shell,
 }
