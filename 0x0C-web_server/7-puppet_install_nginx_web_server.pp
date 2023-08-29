@@ -1,25 +1,31 @@
-# Script to install nginx using puppet
+# install_nginx.pp
 
 package {'nginx':
   ensure => 'present',
 }
 
 exec {'install':
-  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
+  command  => 'sudo apt-get update && sudo apt-get -y install nginx', # Use && instead of ;
+  path     => '/usr/bin', # Specify the path for the command
   provider => shell,
-
+  require  => Package['nginx'], # Make sure the package is installed first
 }
 
-exec {'Hello':
-  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
-  provider => shell,
+file {'/var/www/html/index.html':
+  ensure  => 'present',
+  content => 'Hello World!',
+  require => Exec['install'], # Make sure the file is created after installation
 }
 
-exec {'sudo sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/https://www.youtube.com/watch?v=QH2-TGUlwu4\/;\\n\\t}/" /etc/nginx/sites-available/default':
-  provider => shell,
+file_line {'redirect_rule':
+  ensure  => 'present',
+  path    => '/etc/nginx/sites-available/default',
+  line    => 'location /redirect_me { return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4; }',
+  require => Exec['install'], # Make sure the file is modified after installation
+  notify  => Service['nginx'], # Notify Nginx to reload after modifying the file
 }
 
-exec {'run':
-  command  => 'sudo service nginx restart',
-  provider => shell,
+service {'nginx':
+  ensure  => running,
+  require => Exec['install'], # Make sure the service is started after installation
 }
