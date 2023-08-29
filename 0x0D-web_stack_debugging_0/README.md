@@ -1,21 +1,20 @@
-
+#By Agun Akindele
 0x0D. Web stack debugging #0
 DevOps
 SysAdmin
 Scripting
 Debugging
- By: Sylvain Kalache, co-founder at Holberton School
- Weight: 1
- Project will start Aug 28, 2023 6:00 AM, must end by Aug 30, 2023 6:00 AM
- Checker will be released at Aug 29, 2023 6:00 PM
- An auto review will be launched at the deadline
+By: Sylvain Kalache, co-founder at Holberton School
+Weight: 1
+Project will start Aug 28, 2023 6:00 AM, must end by Aug 30, 2023 6:00 AM
+Checker will be released at Aug 29, 2023 6:00 PM
+An auto review will be launched at the deadline
 Concepts
 For this project, we expect you to look at these concepts:
 
 Network basics
 Docker
 Web stack debugging
-
 
 Background Context
 The Webstack debugging series will train you in the art of debugging. Computers and software rarely work the way we want (that’s the “fun” part of the job!).
@@ -43,21 +42,23 @@ Digest: sha256:58d0da8bc2f434983c6ca4713b08be00ff5586eb5cdff47bcde4b2e88fd40f88
 Status: Downloaded newer image for ubuntu:14.04
 76f44c0da25e1fdf6bcd4fbc49f4d7b658aba89684080ea5d6e8a0d832be9ff9
 vagrant@vagrant:~$ docker ps
-CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
-76f44c0da25e        ubuntu:14.04        "/bin/bash"         13 seconds ago      Up 12 seconds                           infallible_bhabha
+CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
+76f44c0da25e ubuntu:14.04 "/bin/bash" 13 seconds ago Up 12 seconds infallible_bhabha
 vagrant@vagrant:~$ docker exec -ti 76f44c0da25e /bin/bash
 root@76f44c0da25e:/# ls /tmp/
 root@76f44c0da25e:/# cp /etc/passwd /tmp/
 root@76f44c0da25e:/# echo OK > /tmp/isworking
 root@76f44c0da25e:/# ls /tmp/
-isworking  passwd
+isworking passwd
 root@76f44c0da25e:/#
 vagrant@vagrant:~$
 Then my answer file would contain:
 
 sylvain@ubuntu:~$ cat answerfile
 #!/usr/bin/env bash
+
 # Fix my server with these magic 2 lines
+
 cp /etc/passwd /tmp/
 echo OK > /tmp/isworking
 sylvain@ubuntu:~$
@@ -85,8 +86,7 @@ Your Bash scripts must pass Shellcheck without any error
 Your Bash scripts must run without error
 The first line of all your Bash scripts should be exactly #!/usr/bin/env bash
 The second line of all your Bash scripts should be a comment explaining what is the script doing
-Tasks
-0. Give me a page!
+Tasks 0. Give me a page!
 mandatory
 Be sure to read the Docker concept page
 
@@ -97,8 +97,8 @@ Example:
 vagrant@vagrant:~$ docker run -p 8080:80 -d -it holbertonschool/265-0
 47ca3994a4910bbc29d1d8925b1c70e1bdd799f5442040365a7cb9a0db218021
 vagrant@vagrant:~$ docker ps
-CONTAINER ID        IMAGE                   COMMAND             CREATED             STATUS              PORTS                  NAMES
-47ca3994a491        holbertonschool/265-0   "/bin/bash"         3 seconds ago       Up 2 seconds        0.0.0.0:8080->80/tcp   vigilant_tesla
+CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
+47ca3994a491 holbertonschool/265-0 "/bin/bash" 3 seconds ago Up 2 seconds 0.0.0.0:8080->80/tcp vigilant_tesla
 vagrant@vagrant:~$ curl 0:8080
 curl: (52) Empty reply from server
 vagrant@vagrant:~$
@@ -114,6 +114,5 @@ Repo:
 GitHub repository: alx-system_engineering-devops
 Directory: 0x0D-web_stack_debugging_0
 File: 0-give_me_a_page
-  
-Copyright © 2023 ALX, All rights reserved.
 
+Copyright © 2023 ALX, All rights reserved.
