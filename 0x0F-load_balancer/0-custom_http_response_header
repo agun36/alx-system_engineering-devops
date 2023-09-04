@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Update package information
+sudo apt-get update
+
+# Install Nginx
+sudo apt-get install -y nginx
+
+# Create a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+
+# Define the replacement string for Nginx configuration
+string_for_replacement="listen 80 default_server;\n\t\terror_page 404 /404.html;\n\t\tlocation = /404.html {\n\t\t\troot /var/www/html;\n\t\t\tinternal;\n\t\t}\n\t\tadd_header X-Served-By \$hostname;"
+
+# Use sed to replace the target string in the Nginx configuration
+sudo sed -i "s|listen 80 default_server;|$string_for_replacement|" /etc/nginx/sites-available/default
+
+# Test Nginx configuration syntax
+sudo nginx -t
+
+# If the test is successful, reload Nginx
+sudo systemctl reload nginx
+
+# Restart Nginx service
+sudo systemctl restart nginx
