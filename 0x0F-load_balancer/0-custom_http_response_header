@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
 
-# Update package information
+# Update the package lists and upgrade installed packages
 sudo apt-get update
+sudo apt-get upgrade -y
 
-# Install Nginx
+# Install Nginx if not already installed
 sudo apt-get install -y nginx
 
-# Create a custom 404 page
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+# Configure custom HTTP response header in Nginx
+echo 'server {
+    listen 80 default_server;
+    server_name _;
 
-# Define the replacement string for Nginx configuration
-string_for_replacement="listen 80 default_server;\n\t\terror_page 404 /404.html;\n\t\tlocation = /404.html {\n\t\t\troot /var/www/html;\n\t\t\tinternal;\n\t\t}\n\t\tadd_header X-Served-By \$hostname;"
+    location / {
+        add_header X-Served-By $hostname;
+        proxy_pass http://myapp;
+    }
+}' | sudo tee /etc/nginx/sites-available/default > /dev/null
 
-# Use sed to replace the target string in the Nginx configuration
-sudo sed -i "s|listen 80 default_server;|$string_for_replacement|" /etc/nginx/sites-available/default
+# Remove the default Nginx default site configuration
+sudo rm -f /etc/nginx/sites-enabled/default
 
-# Test Nginx configuration syntax
-sudo nginx -t
+# Create a symbolic link to the custom site configuration
+sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
-# If the test is successful, reload Nginx
-sudo systemctl reload nginx
+# Restart Nginx to apply the changes
+sudo service nginx restart
 
-# Restart Nginx service
-sudo systemctl restart nginx
+# Ensure Nginx starts on boot
+sudo systemctl enable nginx
+
+# Print a message to indicate completion
+echo "Configuration completed for web-02."
