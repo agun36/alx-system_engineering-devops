@@ -1,34 +1,24 @@
 #!/usr/bin/env bash
 
-# Update the package lists and upgrade installed packages
-sudo apt-get update
-sudo apt-get upgrade -y
+# Update package list and install Nginx
+apt-get -y update
+apt-get -y install nginx
 
-# Install Nginx if not already installed
-sudo apt-get install -y nginx
+# Start the Nginx service
+service nginx start
 
-# Configure custom HTTP response header in Nginx
-echo 'server {
-    listen 80 default_server;
-    server_name _;
+# Create a simple "Hello World!" index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-    location / {
-        add_header X-Served-By $hostname;
-        proxy_pass http://myapp;
-    }
-}' | sudo tee /etc/nginx/sites-available/default > /dev/null
+# Configure redirection for a specific URL
+sudo sed -i '/server_name _;/a \	location /redirect_me {\n		return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n	}' /etc/nginx/sites-available/default
 
-# Remove the default Nginx default site configuration
-sudo rm -f /etc/nginx/sites-enabled/default
+# Create a custom 404 page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-# Create a symbolic link to the custom site configuration
-sudo ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+# Test the Nginx configuration for syntax errors
+sudo nginx -t
 
-# Restart Nginx to apply the changes
-sudo service nginx restart
-
-# Ensure Nginx starts on boot
-sudo systemctl enable nginx
-
-# Print a message to indicate completion
-echo "Configuration completed for web-02."
+# If the test passes without errors, restart Nginx to apply the changes
+service nginx restart
+    
