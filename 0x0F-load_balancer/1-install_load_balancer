@@ -1,11 +1,23 @@
-#!/usr/bin/env bash                                                           
-# Install and configure HAproxy on your lb-01 server                          
+#!/usr/bin/env bash
+# Install and configure HAproxy on my load balancer
+
 sudo apt-get update
-sudo apt-get -y install software-properties-common
-sudo add-apt-repository -y ppa:vbernat/haproxy-1.8
-sudo apt-get update
-sudo apt-get -y install haproxy=1.8.\*
-options="\n\tbind :80\n\tmode http\n\tuse_backend mybackend\nbackend mybackend\n\tbalance roundrobin\n\tserver 290618-web-01 54.165.175.215:80 check\n\tserver 290618-web-02 35.153.93.54:80 check\n\tserver 290618-lb-01 54.152.97.222:80 check"
-sed -i '/errorfile 504/a frontend myconf' /etc/haproxy/haproxy.cfg
-sed -i "s/frontend myconf/&$options/g" /etc/haproxy/haproxy.cfg
+sudo apt-get install haproxy -y
+
+# Configure loadbalancer
+sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOT
+frontend Akindele-frontend
+        bind *:80
+        mode http
+        default_backend Akindele-backend
+
+backend Akindele-backend
+        balance roundrobin
+        server 290618-web-01 54.165.175.215:80 check
+        server 290618-web-02 35.153.93.54:80 check
+EOT
+# enable haproxy to be started by init script
+
+echo "ENABLED=1" | sudo tee -a /etc/default/haproxy
+
 sudo service haproxy restart
