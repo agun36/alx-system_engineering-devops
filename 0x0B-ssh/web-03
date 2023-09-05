@@ -9,4 +9,4 @@ echo "Adding SSH key..."
 ssh-add ~/.ssh/school
 
 echo "Attempting to connect..."
-ssh -v ubuntu@54.165.175.215
+ssh -v ubuntu@54.152.97.222
