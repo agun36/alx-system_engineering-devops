@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Install Nginx
 apt-get update && apt-get install -y nginx
@@ -21,4 +21,4 @@ echo "server {
 ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Restart Nginx
-service nginx restart
+sudo service nginx restart
