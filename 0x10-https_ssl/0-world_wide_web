@@ -1,19 +1,35 @@
 #!/usr/bin/env bash
-# Script that will display information about subdomains
+# subdomains information
 
-DNS_info () {
-    ANSWER=$(dig $2 | grep -A1 'ANSWER SECTION:' | awk 'NR==2 {print $0}')
-    echo "The subdomain $1 is a $(echo $ANSWER | awk '{print $4}')
-        record and points to $(echo $ANSWER | awk '{print $5}')"
+display_info ()
+{
+	domain="$1"
+	subdomain="$2"
+	dig "$subdomain.$domain" | awk '/ANSWER SECTION:/{getline; printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$subdomain"
 }
 
-if [[ $# == 1 ]]; then
-    subdomains=('www' 'lb-01' 'web-01' 'web-02')
-    for i in "${subdomains[@]}"; do
-	CONCAT="$i.$1"
-	DNS_info $i $CONCAT
-    done
-else
-    CONCAT="$2.$1"
-    DNS_info $2 $CONCAT
-fi
+
+for subdomain in "www" "lb-01" "web-01" "web-02"
+do
+	if [ -z "$2" ] || [ "$2" == "$subdomain" ] ;
+	then
+		display_info "$1" "$subdomain"
+	fi
+done#!/usr/bin/env bash
+# subdomains information
+
+display_info ()
+{
+	domain="$1"
+	subdomain="$2"
+	dig "$subdomain.$domain" | awk '/ANSWER SECTION:/{getline; printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$subdomain"
+}
+
+
+for subdomain in "www" "lb-01" "web-01" "web-02"
+do
+	if [ -z "$2" ] || [ "$2" == "$subdomain" ] ;
+	then
+		display_info "$1" "$subdomain"
+	fi
+done
