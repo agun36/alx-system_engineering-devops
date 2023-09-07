@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
-# subdomains information
+# script to report information about server domains
+# shellcheck disable=SC2086
 
-display_info ()
-{
-    domain="$1"
-    subdomain="$2"
-	   dig "$subdomain.$domain" | awk '/ANSWER SECTION:/{getline; printf "The subdomain %s is a %s record and points to %s\n", var, $4, $5}' var="$subdomain"
+domain=$1
+SUBDOMAINS='www lb-01 web-01 web-02'
+check_domain() {
+	for arg in $SUBDOMAINS
+	do
+        	echo -n "The subdomain $arg is a "
+        	dig "$arg"."$domain" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4 " record and points to " $5}'
+	done
 }
 
-
-for subdomain in "www" "lb-01" "web-01" "web-02"
-do
-if [ -z "$2" ] || [ "$2" == "$subdomain" ] ;
+if [ $# -eq 2 ]
 then
-display_info "$1" "$subdomain"
+    echo -n "The subdomain $2 is a "
+    dig "$2"."$domain" | grep -A1 'ANSWER SECTION:' | tail -n1 | awk '{print $4 " record and points to " $5}'
+else
+    check_domain
 fi
-done
