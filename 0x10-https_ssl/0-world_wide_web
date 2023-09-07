@@ -3,7 +3,8 @@
 
 DNS_info () {
     ANSWER=$(dig $2 | grep -A1 'ANSWER SECTION:' | awk 'NR==2 {print $0}')
-    echo "The subdomain $1 is a $(echo $ANSWER | awk '{print $4}') record and points to $(echo $ANSWER | awk '{print $5}')"
+    echo "The subdomain $1 is a $(echo $ANSWER | awk '{print $4}')
+        record and points to $(echo $ANSWER | awk '{print $5}')"
 }
 
 if [[ $# == 1 ]]; then
