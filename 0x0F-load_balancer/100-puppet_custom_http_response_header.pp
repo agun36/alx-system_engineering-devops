@@ -1,4 +1,5 @@
 # Custom HTTP header in a nginx server
+import 'stdlib/exec'
 
 # update ubuntu server
 exec { 'update server':
