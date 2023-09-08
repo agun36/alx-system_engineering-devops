@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Install and configure HAproxy on my load balancer
 
-sudo apt-get update
-sudo apt-get install haproxy -y
+apt-get -y update
+apt-get -y install haproxy=1.6\*
 
 # Configure loadbalancer
 sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null <<EOT
