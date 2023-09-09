@@ -40,7 +40,7 @@ frontend  akindele-frontend-http
         default_backend akindele-backend
 
 frontend akindele-frontend-https
-	bind *:443 ssl crt /etc/letsencrypt/live/www.akindel.tech/fullchain.pem
+	bind *:443 ssl crt /etc/letsencrypt/live/www.akindel.tech/private.pem
 	http-request set-header X-Forwarded-Proto https
 	default_backend akindele-backend
 
