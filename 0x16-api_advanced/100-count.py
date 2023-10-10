@@ -7,7 +7,6 @@ import requests
 
 def count_words(subreddit, word_list, after="", count=[]):
     """count all words"""
-
     if after == "":
         count = [0] * len(word_list)
 
