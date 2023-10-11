@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# Connect to other server using SSH agent
+
+echo "Starting SSH agent..."
+eval $(ssh-agent)
+
+echo "Adding SSH key..."
+ssh-add ~/.ssh/school
+
+echo "Attempting to connect..."
+ssh -v ubuntu@54.152.97.222
