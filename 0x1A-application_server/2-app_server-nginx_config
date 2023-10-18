@@ -12,10 +12,9 @@ http {
         # gunicorn
 	server {
             listen          80;
-	    server_name     127.0.0.1 35.185.103.0;
+	    server_name     127.0.0.1 54.165.175.215;
 	    location /airbnb-onepage/ {
-		include proxy_params;
-		proxy_pass http://localhost:5000/airbnb-onepage/;
+		proxy_pass http://127.0.0.1:5000/airbnb-onepage/;
 	    }
 	}
 
@@ -70,7 +69,7 @@ http {
 
 	include /etc/nginx/conf.d/*.conf;
 	include /etc/nginx/sites-available/*;
-	add_header X-Served-By "64820-web-01";
+	add_header X-Served-By "290618-web-01";
 
 }
 
