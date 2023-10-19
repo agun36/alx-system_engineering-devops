@@ -48,7 +48,7 @@ server {
  	# Add index.php to the list if you are using PHP
 	index index.html index.htm index.nginx-debian.html;
 
-	server_name web-01.sammykingx.tech;
+	server_name 54.165.175.215;
 	try_files $uri $uri/ =404;
 
 	location / {
@@ -60,7 +60,7 @@ server {
 
 	error_page 404 /404.html;
 
-	add_header X-Serverd-By 'web-01';
+	add_header X-Serverd-By '290618-web-01';
 
 	location = /404.html {
 		root /var/www/html;
@@ -68,7 +68,7 @@ server {
 	}
 
 	location = /redirect_me {
-		return 301 $scheme://youtube.com/@sammykingx;
+		return 301 https://www.youtube.com/watch?v=DHITmcKUGik;
 	}
 
 	location = /airbnb-onepage {
